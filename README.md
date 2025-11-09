@@ -1,4 +1,4 @@
-# 📊 Flowbit AI - Analytics Dashboard
+# 📊 AI Analytics Dashboard
 
 > A production-ready full-stack analytics platform with AI-powered natural language querying
 
@@ -633,10 +633,6 @@ rm -r .next
 npm run build
 ```
 
-## 📧 Contact
-
-For questions or support: recruit@flowbitai.com
-
 ## 🏆 Bonus Features Implemented
 
 ✅ Clean, modular code structure
@@ -652,4 +648,4 @@ For questions or support: recruit@flowbitai.com
 
 ## 📜 License
 
-Private - Flowbit AI Assignment
+MIT License - Open Source Project
