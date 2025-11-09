@@ -646,6 +646,23 @@ npm run build
 ✅ Docker support (see docker-compose.yml)
 ✅ Complete documentation
 
-## 📜 License
+## � Acknowledgments
+
+This project was built using these amazing open-source tools and services:
+
+- **[Vanna AI](https://vanna.ai/)** - Text-to-SQL capabilities
+- **[Groq](https://groq.com/)** - Fast LLM inference
+- **[Neon](https://neon.tech/)** - Serverless PostgreSQL
+- **[Vercel](https://vercel.com/)** - Frontend deployment
+- **[Render](https://render.com/)** - Backend hosting
+- **[Prisma](https://www.prisma.io/)** - Database ORM
+- **[shadcn/ui](https://ui.shadcn.com/)** - UI components
+- **[Chart.js](https://www.chartjs.org/)** - Data visualizations
+
+## 👤 Author
+
+**GitHub:** [@sagar-p-mtr](https://github.com/sagar-p-mtr)
+
+## �📜 License
 
 MIT License - Open Source Project
