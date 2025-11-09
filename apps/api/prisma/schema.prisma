@@ -1,0 +1,115 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Document {
+  id             String   @id @default(uuid())
+  name           String
+  filePath       String
+  fileSize       BigInt
+  fileType       String
+  status         String
+  organizationId String
+  departmentId   String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  uploadedById   String
+  
+  invoice        Invoice?
+  
+  @@index([organizationId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Invoice {
+  id             String    @id @default(uuid())
+  documentId     String    @unique
+  invoiceNumber  String
+  invoiceDate    DateTime
+  deliveryDate   DateTime?
+  dueDate        DateTime?
+  subTotal       Float
+  totalTax       Float
+  invoiceTotal   Float
+  currencySymbol String    @default("EUR")
+  status         String    @default("processed")
+  
+  document       Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  vendor         Vendor    @relation(fields: [vendorId], references: [id])
+  vendorId       String
+  customer       Customer  @relation(fields: [customerId], references: [id])
+  customerId     String
+  payment        Payment?
+  lineItems      LineItem[]
+  
+  @@index([invoiceDate])
+  @@index([status])
+  @@index([vendorId])
+}
+
+model Vendor {
+  id              String    @id @default(uuid())
+  name            String
+  partyNumber     String?
+  address         String?
+  taxId           String?
+  createdAt       DateTime  @default(now())
+  
+  invoices        Invoice[]
+  
+  @@unique([name, taxId])
+  @@index([name])
+}
+
+model Customer {
+  id        String    @id @default(uuid())
+  name      String
+  address   String?
+  createdAt DateTime  @default(now())
+  
+  invoices  Invoice[]
+  
+  @@index([name])
+}
+
+model Payment {
+  id                  String   @id @default(uuid())
+  invoiceId           String   @unique
+  bankAccountNumber   String?
+  bic                 String?
+  accountName         String?
+  paymentTerms        String?
+  netDays             Int      @default(0)
+  discountPercentage  Float?
+  discountDays        Int      @default(0)
+  discountDueDate     DateTime?
+  discountedTotal     Float?
+  
+  invoice             Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model LineItem {
+  id          String  @id @default(uuid())
+  invoiceId   String
+  srNo        Int
+  description String
+  quantity    Float
+  unitPrice   Float
+  totalPrice  Float
+  sachkonto   String?
+  buSchluessel String?
+  category    String  @default("General")
+  
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  @@index([invoiceId])
+  @@index([category])
+}
